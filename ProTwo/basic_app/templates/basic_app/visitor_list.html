@@ -1,0 +1,61 @@
+{% extends "basic_app/basic_app_base.html"  %}
+<div class="jumbotron">
+{% load static %}
+{% block body_block %}
+<h1>Welcome to list of all the Visitors!</h1>
+
+<ol>
+  <table class="table">
+    <thead class="alert-success">
+      <tr>
+        <th scope="col">Id_num</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Company</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for visitor in visitor_details %}
+    <tr>
+      <td>{{visitor.id}}</td>
+      <td>{{visitor.name}}</td>
+      <td>{{visitor.email}}</td>
+      <td>{{visitor.company}}</td>
+      <td><center><a class='btn btn-warning' href="{% url 'basic_app:visitor_update' visitor.id %}">Update</a>
+             <a class="btn btn-sm btn-danger delete" href="{% url 'basic_app:visitor_delete' visitor.id %}">Delete</a></center></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  </ol>
+
+       <!--Paginator -->
+  {% if visitor_details.has_other_pages %}
+    <ul class="pagination">
+      {% if visitor_details.has_previous %}
+        <li><a href="?page={{ visitor_details.previous_page_number }}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in visitor_details.paginator.page_range %}
+        {% if visitor_details.number == i %}
+          <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+        {% else %}
+          <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if visitor_details.has_next %}
+        <li><a href="?page={{ visitor_details.next_page_number }}">&raquo;</a></li>
+      {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+      {% endif %}
+    </ul>
+  {% endif %}
+  <script src="{% static 'crud/js/jquery-3.2.1.js'%}"></script>
+  <script src="{% static 'crud/js/script.js' %}"></script>
+
+</div>
+
+{% endblock %}

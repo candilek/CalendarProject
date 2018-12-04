@@ -1,0 +1,44 @@
+{% extends "basic_app/basic_app_base.html"  %}
+
+{% block body_block %}
+<h1>Welcome to list of all the Appointment!</h1>
+<ol>
+  {% for app in appointments %} <!--context_object_name-->
+
+  <table class="table">
+    <tbody>
+
+      <tr>
+        <td><h4><li><a href="{{app.id}}/"> {{ app.name }}</a></li></h4></td>
+      </tr>
+
+    </tbody>
+  </table>
+  {% endfor %}
+</ol>
+
+
+
+{% if appointments.has_other_pages %}
+  <ul class="pagination">
+    {% if appointments.has_previous %}
+      <li><a href="?page={{ appointments.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in appointments.paginator.page_range %}
+      {% if appointments.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if appointments.has_next %}
+      <li><a href="?page={{ appointments.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
+{% endblock %}

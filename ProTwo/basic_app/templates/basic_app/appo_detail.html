@@ -1,0 +1,35 @@
+{% extends "basic_app/basic_app_base.html" %}
+{% load static %}
+<div class="jumbotron">
+{% block body_block %}
+
+    <h1>Appointment Details:</h1>
+    <table class="table">
+      <thead class="alert-success">
+        <tr>
+          <th scope="col">Id_num</th>
+          <th scope="col">Name</th>
+          <th scope="col">Start Date</th>
+          <th scope="col">End Date</th>
+          <th scope="col">Subject</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{appo_details.id}}</td>
+          <td>{{appo_details.name}}</td>
+          <td>{{appo_details.start_date}}</td>
+          <td> {{appo_details.end_date}}</td>
+          <td> {{appo_details.subject}}</td>
+          <td><a class='btn btn-warning' href="{% url 'basic_app:appo_update' pk=appo_details.pk %}">Update</a>
+              <a class='btn btn-danger' href="{% url 'basic_app:appo_delete' appo_details.id %}">Delete</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+   <script src="{% static 'crud/js/jquery-3.2.1.js'%}"></script>
+   <script src="{% static 'crud/js/appo.js' %}"></script>
+
+{% endblock %}
